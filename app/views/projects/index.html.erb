@@ -1,0 +1,37 @@
+<h1 class= "text-center">Projects Index</h1>
+<p class= "text-center">Here we can check all the projects created and their progress until they are finished</p>
+<%= link_to 'Create project', projects_new_path%>
+
+<%= form_with url: "/dashboard", method: :get, class: "form-inline" do |form| %>
+ <div class="form-group mx-sm-3 mb-2">
+  <%= form.label :query, "Filter projects: " %>
+   <%= form.select :status, [["All", :all], ["Proposal", :proposal], ["Progress", :progress], ["Finished", :finished]], {selected: params[:status]},class:'form-control' %>
+   </div>
+  <%= form.submit "Buscar", class: 'btn btn-warning mb-2' %>
+<% end %>
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Started</th>
+      <th scope="col">Finished</th>
+      <th scope="col">Status</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <% @projects.each do |project| %>
+      <th><%= project.name %></th>
+      <td><%= project.description %></td>
+      <td><%= project.started_at %></td>
+      <td><%= project.ended_at%></td>
+      <td><%= project.status%></td>
+      <td><%= link_to 'Delete', destroy_project_path(project), method: :delete%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
