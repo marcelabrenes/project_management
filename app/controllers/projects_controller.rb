@@ -1,4 +1,7 @@
 class ProjectsController < ApplicationController
+
+  http_basic_authenticate_with name: "desafiovamoscontodo", password: "tupassword", only: :index
+
   def index
     @projects = Project.all
     if params[:status] and params[:status] != 'all'
@@ -13,7 +16,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     if @project.save
-      redirect_to project_index_path
+      redirect_to dashboard_path
     else
       render 'new'
     end
